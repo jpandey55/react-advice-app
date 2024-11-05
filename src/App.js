@@ -6,8 +6,16 @@ function App() {
   );
   const [count, setCount] = useState(0);
 
-  useEffect(function() {
-    getAdvice()
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+  useEffect(function () {
+    getAdvice();
+  }, []);
+
+  useEffect(function () {
+    setInterval(function () {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
   }, []);
 
   async function getAdvice() {
@@ -21,22 +29,19 @@ function App() {
     <div>
       <h1>Hello Visitor</h1>
       <button onClick={getAdvice}>Get Advice</button>
-      <Message
-        advice={advice}
-        count={count}
-       />
+      <Message advice={advice} count={count} />
+      <h1> Current Time is: {time} </h1>
     </div>
   );
 }
 
-
 function Message(props) {
- return (
-  <>
-     <h3>Advice of the day: {props.advice}</h3>
+  return (
+    <>
+      <h3>Advice of the day: {props.advice}</h3>
       <h3>Count: {props.count}</h3>
-  </>
- );
+    </>
+  );
 }
 
 export default App;
